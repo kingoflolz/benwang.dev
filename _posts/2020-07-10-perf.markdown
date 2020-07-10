@@ -1,0 +1,18 @@
+---
+layout: page
+title: Perf+
+---
+
+Perf+ was a series of crowdfunding projects which I ran in 2015 and 2017, which improved the way electronics prototyping was traditionally done.
+
+By combining a traditional perfboard (FR4 board with 0.1” grid of plated through holes) with sets of wires built into the board which are disconnected by default to the holes, but could be joined with a solder blob. There were horizontal wires on one side of the board, and vertical wires on the other, allowing any two points on the board to be connected easily without using any jumper wires.
+
+![Picture of the RemoteBoot](/assets/perf+.png)
+
+The above is a simple routing example, the yellow dots represent the points to connect and the red is solder on each side to the points they are connecting. 
+
+In 2015, I created a [Kickstarter project](https://www.kickstarter.com/projects/658903329/perf-the-perfboard-reinvented) for this concept, which successfully raised AU$15,461 from 614 backers. Over 8,000 boards were manufactured in Shenzhen, and all rewards were fulfilled before schedule.
+
+In 2016, with customer feedback from the first revision, I revised the design to improve the user experience of the boards, and created a [project](https://www.crowdsupply.com/ben-wang/perf-2) with CrowdSupply, another crowdfunding platform. On CrowdSupply, I raised $11,898 from 271 backers. This time, over 10,000 boards were manufactured, and all rewards were fulfilled on schedule.
+
+These boards were reviewed by many online publications, such as [Hackaday](https://hackaday.com/2016/06/16/evaluating-the-unusual-and-innovative-perf-protoboard/) and [EEVBlog](https://youtu.be/oWqHp7PtzYA?t=1670), and are now available on [Amazon](https://www.amazon.com/Perf-Prototyping-board-pack/dp/B06Y2CYYLZ).

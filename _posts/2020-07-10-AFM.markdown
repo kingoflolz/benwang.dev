@@ -1,0 +1,17 @@
+---
+layout: page
+title: Custom Axial Flux Motor
+---
+
+This personal project started in 2018 as a way to experiment with electromagnetics simulation and prototyping. A set of relatively arbitrary constraints and goals (~200g, ~60mm diameter, maximise low speed torque) were chosen as this project was primarily an exploratory project with no immediate application.
+
+With these constraints, magnetics simulations were run with a python script, which using gradient descent and simulated annealing, optimized the topology and parameters of the motor with respect to the torque, efficiency, weight and estimated manufacturing cost.
+
+![Picture of the unwrapped magnetics simulation (one of many!)](/assets/afm%20flux.png)
+
+When the optimized design was produced, the models were drawn up in CAD, and these drawings were then sent to be manufactured in China, including milled carbon fiber, custom neodymium magnets, and electric discharge machined magnetic steel.
+
+![Picture of the motor in CAD (OnShape)](/assets/afm%20cad.png)
+![Picture of the assembled motor](/assets/afm%20irl.png)
+
+The assembled motor was then tested, and performed within 20% of the simulations, which validated the design and prototyping process for custom motors. Furthermore, the motor constant obtained was approximately 2x higher than motors of comparable weight and diameter, with higher continuous torque and efficiency.
