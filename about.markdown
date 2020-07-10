@@ -11,3 +11,5 @@ I have a wide range of interests, including power electronics, embedded devices,
 
 
 If you like the work shown here and are looking for someone in these fields, I would love to hear from you! (Current as of July 2020)
+
+You can find my resume here: [hardware focused](/resume_hw.pdf), [software focused](/resume_sw.pdf)
