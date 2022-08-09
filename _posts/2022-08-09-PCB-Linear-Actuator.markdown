@@ -13,7 +13,10 @@ open source:
 
 A video of it in action:
 
-![](/assets/linear%20video.mp4)
+<video controls style="max-width: 600px; outline: none">
+<source src="/assets/linear%20video.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video> 
 
 # Motor Design and Validation
 
@@ -127,7 +130,10 @@ theoretical 12 mbps of the USB full speed PHY built in to the STM32, while also 
 
 # Host Software
 
-![](/assets/linear%20gui.mp4)
+<video controls style="max-width: 600px; outline: none">
+<source src="/assets/linear%20gui.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 The host software is also written in Rust, using the [egui framework](https://crates.io/crates/egui). Most of the 
 complexity is involved with handling the USB communication in a low latency way. In particular, dedicated threads drive 
