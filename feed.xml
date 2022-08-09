@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-08-09T20:51:04+10:00</updated><id>/feed.xml</id><title type="html">Ben Wang’s Blog</title><subtitle>Ben Wang&apos;s site with some projects and random thoughts</subtitle><entry><title type="html">PCB Linear Actuator</title><link href="/2022/08/09/PCB-Linear-Actuator.html" rel="alternate" type="text/html" title="PCB Linear Actuator" /><published>2022-08-09T00:00:00+10:00</published><updated>2022-08-09T00:00:00+10:00</updated><id>/2022/08/09/PCB-Linear-Actuator</id><content type="html" xml:base="/2022/08/09/PCB-Linear-Actuator.html">&lt;p&gt;&lt;img src=&quot;/assets/linear%20motor.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A fully integrated PCB linear actuator, with the motor driver, encoder and motor all on a single PCB. All designs are
+open source:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/kingoflolz/linear-actuator-firmware&quot;&gt;Firmware and host software&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/kingoflolz/linear-actuator-hardware&quot;&gt;PCB layout and schematics, mechanical components, simulation code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A video of it in action:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20video.mp4&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;motor-design-and-validation&quot;&gt;Motor Design and Validation&lt;/h1&gt;
+
+&lt;p&gt;Design parameters of the motor were simulated with &lt;a href=&quot;https://www.femm.info/wiki/HomePage&quot;&gt;FEMM&lt;/a&gt;. There are not too many
+free parameters to optimize, but the goal is to find some off the shelf magnets which can be used, and to estimate the
+importance of things like air gap on motor performance.&lt;/p&gt;
+
+&lt;p&gt;The design ended up having the simplest possible winding layout (3 slots per pole), which maximized the amount of
+current carrying traces, while also having a high winding factor. 50mm * 10mm * 2mm magnets were used (which are a bit
+smaller in reality by ~0.5mm in each dimension), as they were easily available on
+&lt;a href=&quot;https://www.ebay.com/itm/283456396736&quot;&gt;EBay&lt;/a&gt; etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20flux.png&quot; alt=&quot;Picture of the magnetics simulation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Flux visualization of magnetics simulation.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20force.png&quot; alt=&quot;Force outputs of magnetic simulation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Force outputs of magnetic simulation. The force is very linear with respect to current, as there is no iron core to 
+saturate. The simulated force seems reasonably accurate compared to the measured force, with likely the biggest
+discrepancy coming from the questionable quality of the magnets.&lt;/p&gt;
+
+&lt;p&gt;The motor itself is constructed using a 4 layer 2oz PCB (with 2oz inner layers) from JLCPCB. The motor itself uses all
+4 layers to effectively get 8 oz of copper. At the end turns, each phase uses a single layer, with the last one used
+as the star point.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20motor.png&quot; alt=&quot;Picture of motor layout&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20power.png&quot; alt=&quot;Power output simulation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It appears the empirical power dissipation is approximately twice as high as the estimates. Not entirely sure why, but
+my best guess is a combination of copper being slightly thinner than 75um per layer in reality, as well as the power
+dissipation of the drivers.&lt;/p&gt;
+
+&lt;p&gt;There is space to attach a small heatsink on top of the PCB, and a continuous power dissipation of 25W doesn’t seem to
+cause any issues.&lt;/p&gt;
+
+&lt;h1 id=&quot;motor-assembly&quot;&gt;Motor Assembly&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20motor%20overview.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20cross%20section.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The motor is constructed with two mild steel plates, sandwiching an aluminium spacer. Parts were made at SendCutSend,
+which was quite fast and reasonably priced. The magnets (not shown in CAD) are simply just placed on the steel plates.
+No additional attachment required. Assembly is quite tricky due to the strength of the magnet, but can be done with
+some non-magnetic spacers (I used scrap FR4 PCBs).&lt;/p&gt;
+
+&lt;p&gt;The linear rail is mounted to the bottom plate with a 20mm x 20mm aluminium extrusion. The motor PCB is attached to the
+rail blocks with a 3d printed mounting block.&lt;/p&gt;
+
+&lt;h1 id=&quot;motor-driver&quot;&gt;Motor Driver&lt;/h1&gt;
+
+&lt;p&gt;I used smart power stage ICs (also known as DrMOS) for the power stage (specifically the FDMF3170). This is a bit
+of an unconventional use for these chips, but it integrates the high side and low side MOSFETs, both gate drivers, 
+temperature and current sensing and bootstrap circuitry into a single chip which only requires a few passives. This
+made the power stage layout a breeze, and also allows for operation at very high switching frequencies (up to 1Mhz).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/fdmf3170.png&quot; alt=&quot;Block diagram of FDMF3170 power stage&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Block diagram of the FDMF3170 power stage. You really get quite a lot for &lt;a href=&quot;https://www.lcsc.com/product-detail/Gate-Drive-ICs_onsemi-FDMF3170_C890998.html&quot;&gt;just a few bucks&lt;/a&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20power%20stage.png&quot; alt=&quot;Power stage layout&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The power stage layout, which is now pretty boring as each phase is just a single chip.&lt;/p&gt;
+
+&lt;p&gt;However, the top and bottom FETs are not balanced, with the bottom side having much lower RDSon than 
+the top side (These are designed for 12V to ~1V switching converters after all). This means the SVM algorithm needs to 
+be slightly modified, away from the traditional alt-rev SVM (where during the zero period, the 111 and 000 phase vectors
+are both used alternately to balance heat dissipation between the top and bottom sides, under the assumption that the
+switches are the same). The modified scheme only uses the 000 phase vector, which minimizes resistance losses.&lt;/p&gt;
+
+&lt;p&gt;An additional challenge of driving this type of linear motor is that the inductance of the motor is very low, as there
+is no iron core. This would necessitate an extremely high switching frequency. I decided not to do this (mostly due to
+running out of timer resolution), and instead added a small inductor (470nH) in series with the motor leads to increase
+the inductance. This increases the resistance losses, but it is quite small.&lt;/p&gt;
+
+&lt;p&gt;The driver is controlled by a STM32F412 microcontroller, and switches at 200khz with the control loop running at 8khz.&lt;/p&gt;
+
+&lt;h1 id=&quot;encoder&quot;&gt;Encoder&lt;/h1&gt;
+
+&lt;p&gt;The encoder is a reflective IR sensor with 8 channels. 4 channels are used to build a quadrature encoder, with
+differential signals for the sin and cosine phases. The other 4 channels are for 2 other non-differential quadrature
+tracks with different frequencies. This theoretically enables for absolute positional encoding (as the phase multiple
+can be computed using the phase difference between the 3 quadrature signals), but I haven’t implemented this yet.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20quadrature.png&quot; alt=&quot;Encoder quadrature signals&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The signals are a bit messy due to some crosstalk between channels, as well as some switching noise, but achieves 
+approximately 10um peak to peak noise after decoding.&lt;/p&gt;
+
+&lt;h1 id=&quot;embedded-software&quot;&gt;Embedded Software&lt;/h1&gt;
+
+&lt;p&gt;Firmware is written entirely in Rust, using the &lt;a href=&quot;https://rtic.rs/1/book/en/&quot;&gt;RTIC framework&lt;/a&gt;. The main task is driven
+by a 8khz timer interrupt, which triggers an ADC scan and DMA requests to read all encoder and motor driver inputs.
+The DMA completion interrupt triggers a software task which computes the control loop, which sets the PWM duty cycles.
+A background task handles the USB communications, which uses any remaining CPU time.&lt;/p&gt;
+
+&lt;p&gt;One interesting feature of the firmware is in the communication protocol. Rather than hand coding getter and setter
+methods for each parameter, I wrote a crate called &lt;a href=&quot;https://github.com/kingoflolz/remote-obj&quot;&gt;remote-obj&lt;/a&gt; to essentially
+create getter and setters automatically for nested structs and enums using a proc-macro.&lt;/p&gt;
+
+&lt;p&gt;Combined with a way to &lt;a href=&quot;https://github.com/kingoflolz/remote-obj#dehydration&quot;&gt;compactly encode the parameters with synchronized metadata&lt;/a&gt;
+between the host and device, this enables an on-device oscilloscope which can sample variables at up to the
+control loop frequency (up to 16 values at 8khz). The data is buffered on-device using a neat
+&lt;a href=&quot;https://crates.io/crates/bbqueue&quot;&gt;lockless ring buffer&lt;/a&gt; which holds packets contiguously in memory for easy access.&lt;/p&gt;
+
+&lt;p&gt;This data is then sent to the host over USB CDC ACM. Even though there is no latency/throughput guarantee when using 
+USB bulk endpoints, I’ve found it to be quite fast and low latency, reliably achieving up to 8 mbps out of the 
+theoretical 12 mbps of the USB full speed PHY built in to the STM32, while also having &amp;lt;10ms of latency.&lt;/p&gt;
+
+&lt;h1 id=&quot;host-software&quot;&gt;Host Software&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20gui.mp4&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The host software is also written in Rust, using the &lt;a href=&quot;https://crates.io/crates/egui&quot;&gt;egui framework&lt;/a&gt;. Most of the 
+complexity is involved with handling the USB communication in a low latency way. In particular, dedicated threads drive 
+reading from and writing to the USB endpoints.&lt;/p&gt;
+
+&lt;p&gt;To create a low latency USB stream, the easiest way is to continuously send read requests in a loop, and have the USB
+device terminate the transfer when the device runs out of buffer (using a non-full packet). Importantly to have high
+throughput is to immediately send another read request when another completes, which keeps the bus busy. The results
+are communicated over channels to other threads.&lt;/p&gt;
+
+&lt;p&gt;The software uses runtime reflection facilities provided by remote-obj to view and set parameters (and to know what
+parameters are available to view and set).&lt;/p&gt;
+
+&lt;h1 id=&quot;performance&quot;&gt;Performance&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20position.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;100mm moves take under 200ms. (each horizontal tick is 100ms)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20velocity.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From the velocity plot above, it takes approximately 60ms to achieve 2100mm/s, for an acceleration of around 35m/s^2,
+and it takes approximately 40ms to decelerate back to 100mm/s, for deceleration of around 50m/s^2.&lt;/p&gt;
+
+&lt;p&gt;Better performance can likely be achieved with higher currents, but I’m limited by the quite low OCP of my power supply
+(which is a macbook charger…)&lt;/p&gt;
+
+&lt;h1 id=&quot;previous-versions-and-future&quot;&gt;Previous Versions and Future&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/linear%20history.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It took a few hardware revisions to get to this point, and I’ll probably do one more before I call this project “done”&lt;/p&gt;
+
+&lt;p&gt;Get in touch if you would like a few assembled boards from the next revision! (contact info in the footer)&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Custom Axial Flux Motor</title><link href="/2020/07/10/AFM.html" rel="alternate" type="text/html" title="Custom Axial Flux Motor" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/AFM</id><content type="html" xml:base="/2020/07/10/AFM.html">&lt;p&gt;This personal project started in 2018 as a way to experiment with electromagnetics simulation and prototyping. A set of relatively arbitrary constraints and goals (~200g, ~60mm diameter, maximise low speed torque) were chosen as this project was primarily an exploratory project with no immediate application.&lt;/p&gt;
+
+&lt;p&gt;With these constraints, magnetics simulations were run with a python script, which using gradient descent and simulated annealing, optimized the topology and parameters of the motor with respect to the torque, efficiency, weight and estimated manufacturing cost.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/afm%20flux.png&quot; alt=&quot;Picture of the unwrapped magnetics simulation (one of many!)&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the optimized design was produced, the models were drawn up in CAD, and these drawings were then sent to be manufactured in China, including milled carbon fiber, custom neodymium magnets, and electric discharge machined magnetic steel.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/afm%20cad.png&quot; alt=&quot;Picture of the motor in CAD (OnShape)&quot; /&gt;
+&lt;img src=&quot;/assets/afm%20irl.png&quot; alt=&quot;Picture of the assembled motor&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The assembled motor was then tested, and performed within 20% of the simulations, which validated the design and prototyping process for custom motors. Furthermore, the motor constant obtained was approximately 2x higher than motors of comparable weight and diameter, with higher continuous torque and efficiency.&lt;/p&gt;</content><author><name></name></author><summary type="html">This personal project started in 2018 as a way to experiment with electromagnetics simulation and prototyping. A set of relatively arbitrary constraints and goals (~200g, ~60mm diameter, maximise low speed torque) were chosen as this project was primarily an exploratory project with no immediate application.</summary></entry><entry><title type="html">LFTag</title><link href="/2020/07/10/LFTag.html" rel="alternate" type="text/html" title="LFTag" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/LFTag</id><content type="html" xml:base="/2020/07/10/LFTag.html">&lt;p&gt;&lt;img src=&quot;/assets/lftageg.png&quot; alt=&quot;Picture of LFTags&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;LFTag is a new visual fiducial standard, similar to AprilTag, ArUco and ARTag, designed to maximize the use of Low spacial Frequencies (hence the name), and significantly advances the state of the art in dictionary size-detection range tradeoffs for visual fiducial markers. It was a independing research project completed in the summer of 2020, and will be presented at IEEE CVIV 2020.&lt;/p&gt;
+
+&lt;p&gt;A preprint is available &lt;a href=&quot;https://arxiv.org/abs/2006.00842&quot;&gt;here&lt;/a&gt;, and the conference presentation slide deck is available &lt;a href=&quot;https://docs.google.com/presentation/d/1EZozKKGBuTL88Qhh3uacIZlN6TsmGbYOhnvt1Oosy3M/edit?usp=sharing&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The gist of the algorithm consists of topological connected component analysis to find potential markers in the image, with data encoded within the marker using the relative positioning of marker elements.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/lftag.png&quot; alt=&quot;Picture of LFTag&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">MOC900X</title><link href="/2020/07/10/MOC900x.html" rel="alternate" type="text/html" title="MOC900X" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/MOC900x</id><content type="html" xml:base="/2020/07/10/MOC900x.html">&lt;p&gt;MOC900X is a series of high power density motor drivers which I am designing for the University of Pennsylvania’s Formula SAE Electric team, &lt;a href=&quot;http://www.pennelectricracing.com/&quot;&gt;Penn Electric Racing&lt;/a&gt;. This project was started in late 2019, and is currently ongoing.&lt;/p&gt;
+
+&lt;p&gt;The goal of this project is to design a high voltage (~600V), high power (~60kW) motor controller for the 2021 season, with strong priorities placed on weight and efficiency. Due to these goals, high performance &lt;a href=&quot;https://gansystems.com/gan-transistors/gs66516b/&quot;&gt;GaN transistors&lt;/a&gt; were selected and evaluated on a custom insulated metal substrate half bridge test board controlled by an FPGA:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/MOC900X%20photo.png&quot; alt=&quot;Photo of the half bridge test board&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The half bridge design has been validated both electrically and thermally, and performs at over 99% efficiency at 500V, 100A. The current design iteration puts three half bridges together, and is on target to achieve extremely high whole system specific power, on the order of 170kW/kg including cooling, enclosure and connectors&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/MOC900X%20diagram.png&quot; alt=&quot;CAD shot of the 3 phase test board currently in development&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">MOC900X is a series of high power density motor drivers which I am designing for the University of Pennsylvania’s Formula SAE Electric team, Penn Electric Racing. This project was started in late 2019, and is currently ongoing.</summary></entry><entry><title type="html">RemoteBoot</title><link href="/2020/07/10/RemoteBoot.html" rel="alternate" type="text/html" title="RemoteBoot" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/RemoteBoot</id><content type="html" xml:base="/2020/07/10/RemoteBoot.html">&lt;p&gt;RemoteBoot was a &lt;a href=&quot;https://www.kickstarter.com/projects/658903329/remoteboot-wifi-remote-management-module-for-pcs&quot;&gt;Kickstarter project&lt;/a&gt; which I ran in 2016, when I ran into the frustration of having to leave my computer on all day to be able to remotely access it, having no way of powering it on remotely. Thus, I came up with the idea of RemoteBoot, a module fitting into any desktop computer that allows for remote turn on and monitoring over WiFi.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/remoteboot.png&quot; alt=&quot;Picture of the RemoteBoot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This device consists of a WiFi module (ESP8266), transistors for turning the computer on and off, as well as optoisolators to enable LED monitoring. The firmware was written in C++, with a Javascript web UI, along with a PHP based cloud management interface.&lt;/p&gt;
+
+&lt;p&gt;This Kickstarter project was extremely successful, raising AU$17,589 from 431 backers, with 1000 units manufactured in Shenzhen and successfully delivered to all backers. This project was also covered by some engineering youtubers, such as &lt;a href=&quot;https://youtu.be/lKhESCFeHy0&quot;&gt;Dave Jones from the EEVBlog&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The over 800 devices in use today save significant amounts of energy worldwide, which to date have saved over 600MWh of energy, and reduced CO2 emissions by over 400 tons.&lt;/p&gt;</content><author><name></name></author><summary type="html">RemoteBoot was a Kickstarter project which I ran in 2016, when I ran into the frustration of having to leave my computer on all day to be able to remotely access it, having no way of powering it on remotely. Thus, I came up with the idea of RemoteBoot, a module fitting into any desktop computer that allows for remote turn on and monitoring over WiFi.</summary></entry><entry><title type="html">Perf+</title><link href="/2020/07/10/perf.html" rel="alternate" type="text/html" title="Perf+" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/perf</id><content type="html" xml:base="/2020/07/10/perf.html">&lt;p&gt;Perf+ was a series of crowdfunding projects which I ran in 2015 and 2017, which improved the way electronics prototyping was traditionally done.&lt;/p&gt;
+
+&lt;p&gt;By combining a traditional perfboard (FR4 board with 0.1” grid of plated through holes) with sets of wires built into the board which are disconnected by default to the holes, but could be joined with a solder blob. There were horizontal wires on one side of the board, and vertical wires on the other, allowing any two points on the board to be connected easily without using any jumper wires.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/perf+.png&quot; alt=&quot;Picture of the RemoteBoot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above is a simple routing example, the yellow dots represent the points to connect and the red is solder on each side to the points they are connecting.&lt;/p&gt;
+
+&lt;p&gt;In 2015, I created a &lt;a href=&quot;https://www.kickstarter.com/projects/658903329/perf-the-perfboard-reinvented&quot;&gt;Kickstarter project&lt;/a&gt; for this concept, which successfully raised AU$15,461 from 614 backers. Over 8,000 boards were manufactured in Shenzhen, and all rewards were fulfilled before schedule.&lt;/p&gt;
+
+&lt;p&gt;In 2016, with customer feedback from the first revision, I revised the design to improve the user experience of the boards, and created a &lt;a href=&quot;https://www.crowdsupply.com/ben-wang/perf-2&quot;&gt;project&lt;/a&gt; with CrowdSupply, another crowdfunding platform. On CrowdSupply, I raised $11,898 from 271 backers. This time, over 10,000 boards were manufactured, and all rewards were fulfilled on schedule.&lt;/p&gt;
+
+&lt;p&gt;These boards were reviewed by many online publications, such as &lt;a href=&quot;https://hackaday.com/2016/06/16/evaluating-the-unusual-and-innovative-perf-protoboard/&quot;&gt;Hackaday&lt;/a&gt; and &lt;a href=&quot;https://youtu.be/oWqHp7PtzYA?t=1670&quot;&gt;EEVBlog&lt;/a&gt;, and are now available on &lt;a href=&quot;https://www.amazon.com/Perf-Prototyping-board-pack/dp/B06Y2CYYLZ&quot;&gt;Amazon&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">Perf+ was a series of crowdfunding projects which I ran in 2015 and 2017, which improved the way electronics prototyping was traditionally done.</summary></entry><entry><title type="html">Welcome</title><link href="/2020/07/10/welcome.html" rel="alternate" type="text/html" title="Welcome" /><published>2020-07-10T00:00:00+10:00</published><updated>2020-07-10T00:00:00+10:00</updated><id>/2020/07/10/welcome</id><content type="html" xml:base="/2020/07/10/welcome.html">&lt;p&gt;My name is Ben Wang and I am an undergraduate student studying electrical engineering and management at the University of Pennsylvania.&lt;/p&gt;
+
+&lt;p&gt;I have a wide range of interests, including power electronics, embedded devices, FPGAs, blockchains, computer vision, networking and AI (Phew that was a mouthfull). I hope to share my journey exploring these topics here.&lt;/p&gt;
+
+&lt;p&gt;If you like the work shown here and are looking for someone in these fields, I would love to hear from you!&lt;/p&gt;</content><author><name></name></author><summary type="html">My name is Ben Wang and I am an undergraduate student studying electrical engineering and management at the University of Pennsylvania.</summary></entry></feed>
