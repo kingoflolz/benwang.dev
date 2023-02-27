@@ -25,7 +25,7 @@ All designs are open source:
 To create a phased array microphone, a large number of microphones needs to be placed in an arrangement with
  a wide distribution of spacing. For a linear array, exponential spacing between microphones is found to be optimal for
  broadband signals. To create a 2d array, these symmetrical linear arrays ("arms") are be placed radially, which allows
-the central ("hub") board to be compact.
+the central ("hub") board to be compact. The total cost for the array is approximately $700.
 
 ### Arms
 
@@ -303,3 +303,11 @@ previous sections are designed to work at real time, but can also work on record
 The tradeoff with this recording implementation is that the output data rate is quite high (due to faithfully recording
 everything, even the quantization noise). At 87.5 MBps, a 1-hour recording would be 315 GB! A more optimized
 implementation would do some compression, and do the recording after the CIC filter at a lower sample rate.
+
+## Next Steps
+
+I consider this project essentially complete, and don't plan to work on it any further for the foreseeable future, but
+there are still lots of possible cool extensions if you'd like to build one!
+- Using more advanced beamforming algorithms ([DAMAS](https://ntrs.nasa.gov/api/citations/20080015889/downloads/20080015889.pdf) etc.)
+- Better GUI to combine all existing functions (e.g. See where sound is coming from, and record audio from there)
+- Combine differentiable beamforming and neural models (e.g. forced alignment example mentioned above)
