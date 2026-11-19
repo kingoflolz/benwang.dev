@@ -3,7 +3,7 @@ layout: page
 title: PCB Linear Actuator
 ---
 
-![](/assets/linear%20motor.jpg)
+![](/assets/linear-actuator/linear%20motor.jpg)
 
 A fully integrated PCB linear actuator, with the motor driver, encoder and motor all on a single PCB. All designs are
 open source:
@@ -14,7 +14,7 @@ open source:
 A video of it in action:
 
 <video controls style="max-width: 600px; outline: none">
-<source src="/assets/linear%20video.mp4" type="video/mp4">
+<source src="/assets/linear-actuator/linear%20video.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video> 
 
@@ -29,11 +29,11 @@ current carrying traces, while also having a high winding factor. 50mm * 10mm * 
 smaller in reality by ~0.5mm in each dimension), as they were easily available on
 [EBay](https://www.ebay.com/itm/283456396736) etc.
 
-![Picture of the magnetics simulation](/assets/linear%20flux.png)
+![Picture of the magnetics simulation](/assets/linear-actuator/linear%20flux.png)
 
 Flux visualization of magnetics simulation.
 
-![Force outputs of magnetic simulation](/assets/linear%20force.png)
+![Force outputs of magnetic simulation](/assets/linear-actuator/linear%20force.png)
 
 Force outputs of magnetic simulation. The force is very linear with respect to current, as there is no iron core to 
 saturate. The simulated force seems reasonably accurate compared to the measured force, with likely the biggest
@@ -43,9 +43,9 @@ The motor itself is constructed using a 4 layer 2oz PCB (with 2oz inner layers) 
 4 layers to effectively get 8 oz of copper. At the end turns, each phase uses a single layer, with the last one used
 as the star point.
 
-![Picture of motor layout](/assets/linear%20motor.png)
+![Picture of motor layout](/assets/linear-actuator/linear%20motor.png)
 
-![Power output simulation](/assets/linear%20power.png)
+![Power output simulation](/assets/linear-actuator/linear%20power.png)
 
 It appears the empirical power dissipation is approximately twice as high as the estimates. Not entirely sure why, but
 my best guess is a combination of copper being slightly thinner than 75um per layer in reality, as well as the power
@@ -56,9 +56,9 @@ cause any issues.
 
 # Motor Assembly
 
-![](/assets/linear%20motor%20overview.png)
+![](/assets/linear-actuator/linear%20motor%20overview.png)
 
-![](/assets/linear%20cross%20section.png)
+![](/assets/linear-actuator/linear%20cross%20section.png)
 
 The motor is constructed with two mild steel plates, sandwiching an aluminium spacer. Parts were made at SendCutSend,
 which was quite fast and reasonably priced. The magnets (not shown in CAD) are simply just placed on the steel plates.
@@ -75,11 +75,11 @@ of an unconventional use for these chips, but it integrates the high side and lo
 temperature and current sensing and bootstrap circuitry into a single chip which only requires a few passives. This
 made the power stage layout a breeze, and also allows for operation at very high switching frequencies (up to 1Mhz).
 
-![Block diagram of FDMF3170 power stage](/assets/fdmf3170.png)
+![Block diagram of FDMF3170 power stage](/assets/linear-actuator/fdmf3170.png)
 
 Block diagram of the FDMF3170 power stage. You really get quite a lot for [just a few bucks](https://www.lcsc.com/product-detail/Gate-Drive-ICs_onsemi-FDMF3170_C890998.html)!
 
-![Power stage layout](/assets/linear%20power%20stage.png)
+![Power stage layout](/assets/linear-actuator/linear%20power%20stage.png)
 
 The power stage layout, which is now pretty boring as each phase is just a single chip.
 
@@ -103,7 +103,7 @@ differential signals for the sin and cosine phases. The other 4 channels are for
 tracks with different frequencies. This theoretically enables for absolute positional encoding (as the phase multiple
 can be computed using the phase difference between the 3 quadrature signals), but I haven't implemented this yet.
 
-![Encoder quadrature signals](/assets/linear%20quadrature.png)
+![Encoder quadrature signals](/assets/linear-actuator/linear%20quadrature.png)
 
 The signals are a bit messy due to some crosstalk between channels, as well as some switching noise, but achieves 
 approximately 10um peak to peak noise after decoding.
@@ -131,7 +131,7 @@ theoretical 12 mbps of the USB full speed PHY built in to the STM32, while also 
 # Host Software
 
 <video controls style="max-width: 600px; outline: none">
-<source src="/assets/linear%20gui.mp4" type="video/mp4">
+<source src="/assets/linear-actuator/linear%20gui.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
@@ -149,11 +149,11 @@ parameters are available to view and set).
 
 # Performance
 
-![](/assets/linear%20position.png)
+![](/assets/linear-actuator/linear%20position.png)
 
 100mm moves take under 200ms. (each horizontal tick is 100ms)
 
-![](/assets/linear%20velocity.png)
+![](/assets/linear-actuator/linear%20velocity.png)
 
 From the velocity plot above, it takes approximately 60ms to achieve 2100mm/s, for an acceleration of around 35m/s^2,
 and it takes approximately 40ms to decelerate back to 100mm/s, for deceleration of around 50m/s^2. 
@@ -163,7 +163,7 @@ Better performance can likely be achieved with higher currents, but I'm limited 
 
 # Previous Versions and Future
 
-![](/assets/linear%20history.jpg)
+![](/assets/linear-actuator/linear%20history.jpg)
 
 It took a few hardware revisions to get to this point, and I'll probably do one more before I call this project "done"
 

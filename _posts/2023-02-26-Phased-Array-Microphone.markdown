@@ -14,10 +14,10 @@ All designs are open source:
 - [FPGA gateware](https://github.com/kingoflolz/mic_gateware)
 - [PCB layout and schematics, mechanical components](https://github.com/kingoflolz/mic_hardware)
 
-![](/assets/mic block diagram.png)
+![](/assets/microphone/mic%20block%20diagram.png)
 <p style="text-align: center;"> Block diagram </p>
 
-![](/assets/mic overall.jpg)
+![](/assets/microphone/mic%20overall.jpg)
 <p style="text-align: center;"> Glamor shot </p>
 
 ## Hardware
@@ -55,7 +55,7 @@ improve yields so extensive rework isn't required.
 Even with rework, there are still some microphones which produce bogus data. These are just masked out in the code, as
 there are enough working ones to make up for it (and it's too much work to remove a bunch of arms to do more rework...)
 
-![](/assets/mic arm panel.png)
+![](/assets/microphone/mic%20arm%20panel.png)
 
 ### Hub
 
@@ -66,7 +66,7 @@ card is used, as it has enough IOs, is cheap and readily available, and has two 
 been [fully reverse engineered](https://github.com/wuxx/Colorlight-FPGA-Projects). About 100 GPIOs are broken out over 
 the DDR2 connector, which is much easier to fan out than the BGA of the original FPGA.
 
-![](/assets/mic hub board.png)
+![](/assets/microphone/mic%20hub%20board.png)
 
 Other than the FPGA, the hub contains some simple power management circuitry, and connectors for the arm boards as well
 as an Ethernet connector with integrated magnetics.
@@ -77,17 +77,17 @@ The arms are attached with M3 screws to the hub using [PCB mounted standoffs/nut
 , which conveniently can be assembled with SMD processes. The connections from each arm to the hub is made with 8 pin,
 2mm pitch connectors. 
 
-![](/assets/mic hub attachment.png)
+![](/assets/microphone/mic%20hub%20attachment.png)
 
 The original mechanical design consists of slots on the arm PCBs which interlock with circumferential structural PCBs,
 however the low torsional rigidity of the arms means the whole structure deformed too easily.
 
-![](/assets/mic structural pcb.png)
+![](/assets/microphone/mic%20structural%20pcb.png)
 
 The final mechanical design consists of pieces of laser cut 1/4th inch MDF around the outer edge of the array, with each
 arm attached to the MDF with some zip ties. 
 
-![](/assets/mic arm attachment.jpg)
+![](/assets/microphone/mic%20arm%20attachment.jpg)
 
 As the microphone array is mounted on the wall (which is very susceptible to reflections), a layer of acoustic foam is
 used to attenuate the reflections to make calibration easier.
@@ -206,7 +206,7 @@ such as concavity from the lack of structural rigidity. The largest position err
 and the designed positions is on the order of 5mm, which is enough to introduce significant phase errors to high 
 frequency sound if uncorrected, although perhaps not strictly necessary (10khz sound has a wavelength of ~3.4cm).
 
-![](/assets/mic calibration.png)
+![](/assets/microphone/mic%20calibration.png)
 
 
 ### Beamforming
@@ -223,7 +223,7 @@ Multiple nested subarrays of the original array are used for different frequency
 required for beamforming, as each frequency does not need to be beamformed with all the microphone. This also ensures
 that the beamforming gains of all the frequencies are matched.
 
-![](/assets/mic subarray.png)
+![](/assets/microphone/mic%20subarray.png)
 
 Two different types of beamforming visualizations are implemented, a 3d near field beamformer and a 2d far field
 beamformer. When the audio source is far away, the wavefront is essentially a flat plane, and how far away the
@@ -248,7 +248,7 @@ a quarter million semi-transparent voxels at interactive framerates is no issue.
 A quick demo of the voxel visualization below, note the reflection off the roof!
 
 <video controls style="max-width: 600px; outline: none">
-<source src="/assets/mic%203d%20demo.mp4" type="video/mp4">
+<source src="/assets/microphone/mic%203d%20demo.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video> 
 
@@ -262,7 +262,7 @@ A demo of the 2d visualization here, but it's not very exciting due to the poor 
 the array, with lots of reflections and multipath.
 
 <video controls style="max-width: 600px; outline: none">
-<source src="/assets/mic%202d%20demo.mp4" type="video/mp4">
+<source src="/assets/microphone/mic%202d%20demo.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
@@ -283,14 +283,14 @@ by comparing the raw audio from a single microphone with the output from the bea
 Raw audio from a single microphone:
 
 <audio controls style="max-width: 600px; outline: none">
-<source src="/assets/mic%20raw.wav" type="audio/wav">
+<source src="/assets/microphone/mic%20raw.wav" type="audio/wav">
 Your browser does not support the video tag.
 </audio>
 
 Beamformed audio:
 
 <audio controls style="max-width: 600px; outline: none">
-<source src="/assets/mic%20beamformed.wav" type="audio/wav">
+<source src="/assets/microphone/mic%20beamformed.wav" type="audio/wav">
 Your browser does not support the video tag.
 </audio>
 

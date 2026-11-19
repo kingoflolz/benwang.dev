@@ -3,7 +3,7 @@ layout: page
 title: LFTag
 ---
 
-![Picture of LFTags](/assets/lftageg.png)
+![Picture of LFTags](/assets/lftag/lftageg.png)
 
 LFTag is a new visual fiducial standard, similar to AprilTag, ArUco and ARTag, designed to maximize the use of Low spacial Frequencies (hence the name), and significantly advances the state of the art in dictionary size-detection range tradeoffs for visual fiducial markers. It was a independing research project completed in the summer of 2020, and will be presented at IEEE CVIV 2020.
 
@@ -11,4 +11,4 @@ A preprint is available [here](https://arxiv.org/abs/2006.00842), and the confer
 
 The gist of the algorithm consists of topological connected component analysis to find potential markers in the image, with data encoded within the marker using the relative positioning of marker elements.
 
-![Picture of LFTag](/assets/lftag.png)
+![Picture of LFTag](/assets/lftag/lftag.png)

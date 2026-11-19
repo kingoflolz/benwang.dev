@@ -16,14 +16,14 @@ how it's possible to achieve full-rate fiducial marker detection, decoding and p
 implemented in the design to stream full resolution video out of the cameras. The combined design only consumes
 ~1 W total including the camera sensors and Ethernet PHY when powered from USB.
 
-![lutcam arch.png](/assets/lutcam%20arch.png)
+![lutcam arch.png](/assets/fiducial/lutcam%20arch.png)
 <p style="text-align: center;"> Architecture block diagram </p>
 
-![lutcam board.jpg](/assets/lutcam%20board.jpg)
+![lutcam board.jpg](/assets/fiducial/lutcam%20board.jpg)
 <p style="text-align: center;"> PCB photos </p>
 
 <video controls style="max-width: 600px; outline: none">
-<source src="/assets/lftag%20demo.mp4" type="video/mp4">
+<source src="/assets/fiducial/lftag%20demo.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 <p style="text-align: center;"> End-to-end demo </p>
@@ -52,7 +52,7 @@ then encoded within the relative locations of the marker elements. A low false-p
 geometric constraints between the marker elements. [The paper](https://arxiv.org/abs/2006.00842) discusses this in more detail and also compares the
 different design tradeoffs between different tags.
 
-![lftag diagram.png](/assets/lftag%20diagram.png)
+![lftag diagram.png](/assets/fiducial/lftag%20diagram.png)
 <p style="text-align: center;"> LFTag marker components </p>
 
 The most important feature of this marker design is that the detection can be done in a single-pass raster stream, which
@@ -69,7 +69,7 @@ The high-level architecture of the streaming detector is:
 - Tag decoding
   - From the metadata of each component (centroid, size), verify and decode the tag ID
 
-![lftag decoding high level](/assets/lftag%20decoding%20high%20level.png)
+![lftag decoding high level](/assets/fiducial/lftag%20decoding%20high%20level.png)
 <p style="text-align: center;"> LFTag decoding at a high level </p>
 
 # Thresholding
@@ -93,7 +93,7 @@ than the size of the tag, so that all the tag features can be detected reliably.
 could have issues with varying lighting, and if it's too small, there can be artifacts within the tag or tag elements
 joined together.
 
-![lftag filter.png](/assets/lftag%20filter.png)
+![lftag filter.png](/assets/fiducial/lftag%20filter.png)
 <p style="text-align: center;"> Adaptive thresholding filter size tradeoff </p>
 
 This is tricky when the tag size is unknown, so this design also performs multiscale detection, where both the raw image
@@ -101,7 +101,7 @@ and downsampled images are processed.
 The raw image and the images downsampled by 4× and 16× per axis are combined into a single image, so the same pipeline can be
 time-multiplexed between the different resolutions by just clocking it slightly higher.
 
-![lftag multiscale.png](/assets/lftag%20multiscale.png)
+![lftag multiscale.png](/assets/fiducial/lftag%20multiscale.png)
 <p style="text-align: center;"> Multiscale detection example </p>
 
 # Streaming Hierarchical Connected Component Analysis
@@ -130,7 +130,7 @@ component is completed.
 
 ## Combining into hierarchical relationships
 
-![lftag hiercca.png](/assets/lftag%20hiercca.png)
+![lftag hiercca.png](/assets/fiducial/lftag%20hiercca.png)
 <p style="text-align: center;"> Combining two CCA blocks into hierarchical CCA </p>
 
 To perform hierarchical
@@ -224,7 +224,7 @@ Generally, this codec has higher quality than JPEG XS due to better entropy codi
 built-in rate control and has less noticeable artifacts. It is clearly worse than newer image codecs like WebP, but
 encoding is much cheaper.
 
-![](/assets/lwc%20comparison.png)
+![](/assets/fiducial/lwc%20comparison.png)
 <p style="text-align: center;"> Comparison of LWC, JPEG, JPEG XS, WebP </p>
 
 Obviously, all of these are very bad compared to a real video codec, but doing interframe prediction is very difficult if
@@ -274,5 +274,5 @@ Broken down by functional unit:
 Nothing too exciting about the hardware: it's a 6-layer PCB with the FPGA, two image sensors, gigabit Ethernet PHY + PoE
 and the associated power supplies.
 
-![](/assets/lutcam%20pcb.png)
+![](/assets/fiducial/lutcam%20pcb.png)
 <p style="text-align: center;"> LUTCam PCB Design </p>

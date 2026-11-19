@@ -5,7 +5,7 @@ title: RemoteBoot
 
 RemoteBoot was a [Kickstarter project](https://www.kickstarter.com/projects/658903329/remoteboot-wifi-remote-management-module-for-pcs) which I ran in 2016, when I ran into the frustration of having to leave my computer on all day to be able to remotely access it, having no way of powering it on remotely. Thus, I came up with the idea of RemoteBoot, a module fitting into any desktop computer that allows for remote turn on and monitoring over WiFi.
 
-![Picture of the RemoteBoot](/assets/remoteboot.png)
+![Picture of the RemoteBoot](/assets/remoteboot/remoteboot.png)
 
 This device consists of a WiFi module (ESP8266), transistors for turning the computer on and off, as well as optoisolators to enable LED monitoring. The firmware was written in C++, with a Javascript web UI, along with a PHP based cloud management interface.
 

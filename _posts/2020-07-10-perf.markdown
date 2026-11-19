@@ -7,7 +7,7 @@ Perf+ was a series of crowdfunding projects which I ran in 2015 and 2017, which 
 
 By combining a traditional perfboard (FR4 board with 0.1” grid of plated through holes) with sets of wires built into the board which are disconnected by default to the holes, but could be joined with a solder blob. There were horizontal wires on one side of the board, and vertical wires on the other, allowing any two points on the board to be connected easily without using any jumper wires.
 
-![Picture of the RemoteBoot](/assets/perf+.png)
+![Picture of the RemoteBoot](/assets/perf/perf+.png)
 
 The above is a simple routing example, the yellow dots represent the points to connect and the red is solder on each side to the points they are connecting. 
 
