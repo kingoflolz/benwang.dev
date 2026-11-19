@@ -1,6 +1,11 @@
 ---
 layout: page
 title: OM-1 In-Body Star Tracker
+image:
+  path: https://benwang.dev/assets/star-tracker/andromeda-compressed.webp
+  width: 3200
+  height: 2404
+  alt: Andromeda galaxy photographed with the OM-1 in-body star tracker
 ---
 
 This post describes a firmware patch for the Olympus/OMDS OM-1 (and Mark II) camera that uses the in-body image stabilization actuators to
